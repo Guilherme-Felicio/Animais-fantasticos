@@ -33,8 +33,47 @@ function initAccording(){
 
 }
 
- 
-
 initAccording();
 initNavTab();
+function InitScrollSuave(){
+    function scrollToSection(event){
+        event.preventDefault();
+        const href = event.currentTarget.getAttribute('href');
+        const section = document.querySelector(href);
+        section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        })
+    }
+
+    const linksInternos = document.querySelectorAll('.js-menu a[href^="#"]');
+
+    linksInternos.forEach((link) => {
+        link.addEventListener('click', scrollToSection);
+    });
+}
+
+InitScrollSuave();
+
+function initAnimaScroll(){
+    const sections = document.querySelectorAll('.js-scroll');
+
+    if(sections.length){
+        const windowMetade = window.innerHeight * 0.7;
+        function animaScroll(){
+            sections.forEach((section) => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const isVisible = (sectionTop - windowMetade) < 0;
+                if(isVisible){
+                    section.classList.add('ativo');
+                }
+            }); 
+        }
+    }
+    animaScroll();
+    window.addEventListener('scroll', animaScroll);
+}
+
+initAnimaScroll();
+
 
